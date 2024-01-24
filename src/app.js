@@ -10,6 +10,8 @@ mongoose.connect('mongodb+srv://lucaoxt:KTVcGXNFWTlYhEc0@cluster1.socdj3b.mongod
 
 // Carrega os Models
 const Product = require('./models/product');
+const Customer = require('./models/customer');
+const Order = require('./models/order');
 
 const index = require('./routes/index');
 const product = require('./routes/product');
