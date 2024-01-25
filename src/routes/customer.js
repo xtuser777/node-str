@@ -8,6 +8,8 @@ const CustomersController = require('../controllers/customers-controller');
 
 router.post('/', CustomersController.create);
 
+router.post('/auth', CustomersController.authenticate);
+
 //router.put('/:id', CustomersController.update);
 
 //router.delete('/:id', CustomersController.delete);

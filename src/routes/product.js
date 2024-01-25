@@ -3,13 +3,14 @@
 const express = require('express');
 const router = express.Router();
 const ProductsController = require('../controllers/products-controller');
+const AuthService = require('../services/auth-service');
 
 router.get('/', ProductsController.index);
 
-router.post('/', ProductsController.create);
+router.post('/', AuthService.isAdmin, ProductsController.create);
 
-router.put('/:id', ProductsController.update);
+router.put('/:id', AuthService.isAdmin, ProductsController.update);
 
-router.delete('/:id', ProductsController.delete);
+router.delete('/:id', AuthService.isAdmin, ProductsController.delete);
 
 module.exports = router;

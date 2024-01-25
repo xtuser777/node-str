@@ -2,6 +2,7 @@
 
 const guid = require('guid');
 const OrderRepository = require('../repositories/order-repository');
+const AuthService = require('../services/auth-service');
 
 class OrdersController {
   static async index(req, res, next) {
@@ -13,10 +14,15 @@ class OrdersController {
   }
 
   static async create(req, res, next) {
-    let data = req.body;
-    data.number = guid.raw().substring(0, 6);
     try {
-      res.status(201).send(await new OrderRepository().save(data));
+      const token = req.body.token || req.query.token || req.headers['x-access-token'];
+      const data = await AuthService.decodeToken(token);
+
+      res.status(201).send(await new OrderRepository().save({ 
+        ...req.body, 
+        number: guid.raw().substring(0, 6), 
+        customer: data.id 
+      }));
     } catch (e) {
       res.status(400).send(e.message);
     }
