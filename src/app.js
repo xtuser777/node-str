@@ -3,10 +3,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const config = require('./config');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://lucaoxt:KTVcGXNFWTlYhEc0@cluster1.socdj3b.mongodb.net/node-str?retryWrites=true&w=majority');
+mongoose.connect(config.connectionString);
 
 // Carrega os Models
 const Product = require('./models/product');
@@ -15,11 +16,15 @@ const Order = require('./models/order');
 
 const index = require('./routes/index');
 const product = require('./routes/product');
+const customer = require('./routes/customer');
+const order = require('./routes/order');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', index);
 app.use('/products', product);
+app.use('/customers', customer);
+app.use('/orders', order);
 
 module.exports = app;
